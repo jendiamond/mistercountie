@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang 'en'>
+<head>
+  <meta charset='UTF-8'>
+  <title>Happy New Year! | ¡Feliz Año Nuevo! | Godt Nytår</title>
+</head>
+<body>
+  <div class="digitalclock"></div>
+
+  <style>
+    .digitalclock {
+      font-size: 4em;
+    }
+  </style>
+
+  <script>
+    function digitalclock() {
+      // Create a new Date object and assign it to a variable called "time".
+      var time = new Date(),
+
+        // Access the "getHours" method on the Date object with the dot accessor.
+        hours = time.getHours(),
+        // Access the "getMinutes" method with the dot accessor.
+        minutes = time.getMinutes(),
+        seconds = time.getSeconds();
+
+      document.querySelectorAll('.digitalclock')[0].innerHTML = harold(hours) + ":" + harold(minutes) + ":" + harold(seconds);
+
+      function harold(standIn) {
+        if (standIn < 10) {
+          standIn = '0' + standIn
+        }
+        return standIn;
+      }
+    }
+    setInterval(digitalclock, 1000);
+  </script>
+
+</body>
+</html>
