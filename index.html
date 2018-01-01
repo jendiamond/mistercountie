@@ -1,231 +1,124 @@
 <!DOCTYPE html>
-<html lang 'en'>
+<html lang="en">
 <head>
-  <meta charset='UTF-8'>
-  <title>Happy New Year! | ¡Feliz Año Nuevo! | Godt Nytår</title>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
 </head>
 <body>
-    <table>
-    <tr>
-      <td>
-        <div class='clock'>
-          <div class='clock-face'>
-            <div class='hourhand hour-hand'></div>
-            <div class='minutehand minute-hand'></div>
-            <div class='secondhand second-hand'></div>
-          </div>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <div id="clockdiv">
-          <div>
-            <span class="hours"></span>
-            <div class="smalltext">Hours</div>
-          </div>
-          <div>
-            <span class="minutes"></span>
-            <div class="smalltext">Minutes</div>
-          </div>
-          <div>
-            <span class="seconds"></span>
-            <div class="smalltext">Seconds</div>
-          </div>
-        </div>
-      </td>
-    </tr>
-  </table>
+
+
+    <div class="clock">
+      <div class="clock-face">
+        <div class="minutehand hour-hand"></div>
+        <div class="hourhand min-hand"></div>
+        <div class="secondhand second-hand"></div>
+      </div>
+    </div>
+
 
   <style>
     html {
+      /*background:#018DED url(http://unsplash.it/1500/1000?image=881&blur=50); */
       background:url("new-year.png");
       background-size:cover;
       font-family:'helvetica neue';
-      text-align:center;
-      font-size:100%;
+      text-align: center;
+      font-size: 10px;
     }
+
     body {
-      margin:0;
-      font-size:2rem;
+      margin: 0;
+      font-size: 2rem;
       display:flex;
       flex:1;
-      min-height:100vh;
-      align-items:center;
-    }
-    p {
-      font-family:'helvetica neue';
-      text-align:center;
-      font-size:.5em;
-      color:black;
+      min-height: 60vh;
+      align-items: center;
     }
 
     .clock {
-      width:30rem;
-      height:30rem;
-      border:20px solid #a67c00; /*gold*/
+      width: 30rem;
+      height: 30rem;
+      border:10px solid #a67c00;
       border-radius:50%;
       margin:50px auto;
-      position:relative;
+      position: relative;
       padding:2rem;
       box-shadow:
         0 0 0 4px rgba(0,0,0,0.1),
         inset 0 0 0 3px #EFEFEF,
         inset 0 0 10px black,
         0 0 10px rgba(0,0,0,0.2);
-      background:rgba(183,195,208,.5); /*heather blue*/
+      background:#ccc;
     }
 
     .clock-face {
-      position:relative;
-      width:100%;
-      height:100%;
-      transform:translateY(-3px);
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+
     }
+
     .hourhand {
       width:50%;
       height:6px;
-      background:#404040;/*dark gray*/
-      position:absolute;
+      background:#999;
+      position: absolute;
       top:50%;
-      transform-origin:100%;
-      transform:rotate(90deg);
-      transition:all 0.5s;
-      transition-timing-function:cubic-bezier(0.67, -0.18, 0.52, 1.39);
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
     }
     .minutehand {
       width:50%;
       height:6px;
-      background:black;
-      position:absolute;
+      background:white;
+      position: absolute;
       top:50%;
-      transform-origin:100%;
-      transform:rotate(90deg);
-      transition:all 0.5s;
-      transition-timing-function:cubic-bezier(0.67, -0.18, 0.52, 1.39);
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
     }
     .secondhand {
       width:50%;
       height:6px;
-      background:white;
-      position:absolute;
+      background:black;
+      position: absolute;
       top:50%;
-      transform-origin:100%;
-      transform:rotate(90deg);
-      transition:all 0.05s;
-      transition-timing-function:cubic-bezier(0.67, -0.18, 0.52, 1.39);
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
     }
+</style>
 
-    .video {
-      border:2px solid #a67c00; /*gold*/
-      border-radius:10%;
-      margin:5px auto;
-      position:relative;
-      padding:1rem;
-      box-shadow:
-        0 0 0 4px rgba(0,0,0,0.1),
-        inset 0 0 0 3px #EFEFEF,
-        inset 0 0 10px black,
-        0 0 10px rgba(0,0,0,0.2);
-        background:rgba(183,195,208,.5); /*heather blue*/
-    }
+<script>
+  const secondHand = document.querySelector('.second-hand');
+  const minsHand = document.querySelector('.min-hand');
+  const hourHand = document.querySelector('.hour-hand');
 
-    #clockdiv{
-      font-family: 'helvetica neue';
-      color: #fff;
-      display: inline-block;
-      font-weight: 100%;
-      text-align: center;
-      font-size: 100%;
-      font-style: bold;
-    }
+  function setDate() {
+    const now = new Date();
 
-    #clockdiv > div{
-      padding: 10px;
-      border-radius: 3px;
-      background: #00BF96;
-      display: inline-block;
-    }    
+    const seconds = now.getSeconds();
+    const secondsDegrees = ((seconds / 60) * 360) + 90;
+    secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
 
-    #clockdiv div > span{
-      padding: 15px;
-      border-radius: 3px;
-      background: #00816A;
-      display: inline-block;
-    }
+    const mins = now.getMinutes();
+    const minsDegrees = ((mins / 60) * 360) + ((seconds/60)*6) + 90;
+    minsHand.style.transform = `rotate(${minsDegrees}deg)`;
 
-    .smalltext{
-      padding-top: 5px;
-      font-size: 100%;
-      font-style: bold;
-      font-family: 'helvetica neue';
-    }
-  </style>
+    const hour = now.getHours();
+    const hourDegrees = ((hour / 12) * 360) + ((mins/60)*30) + 90;
+    hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+  }
 
-  <script>
-    const secondHand = document.querySelector('.second-hand');
-    const minuteHand = document.querySelector('.minute-hand');
-    const hourHand = document.querySelector('.hour-hand');
-    function setDate() {
-      const now = new Date();
-      const seconds = now.getSeconds();
-      const secondDegrees = ((seconds / 60) * 360) + 90;
-      secondHand.style.transform = `rotate(${secondDegrees}deg)`;
+  setInterval(setDate, 1000);
 
-      const minutes = now.getMinutes();
-      const minuteDegrees = ((minutes / 60) * 360) + 90;
-      minuteHand.style.transform = `rotate(${minuteDegrees}deg)`;
+  setDate();
 
-      const hours = now.getHours();
-      const hourDegrees = ((hours / 12) * 360) + 90;
-      hourHand.style.transform = `rotate(${hourDegrees}deg)`;
-    }
-    setInterval(setDate, 1000);
-
-    function getTimeRemaining(endtime) {
-      var t = Date.parse(endtime) - Date.parse(new Date());
-      var secondsRemaining = Math.floor((t / 1000) % 60);
-      var minutesRemaining = Math.floor((t / 1000 / 60) % 60);
-      var hoursRemaining = Math.floor((t / (1000 * 60 * 60)) % 24);
-      /*var days = Math.floor(t / (1000 * 60 * 60 * 24));*/
-      return {
-        'total': t,
-        /*'days': days,*/
-        'hours': hoursRemaining,
-        'minutes': minutesRemaining,
-        'seconds': secondsRemaining
-      };
-    }
-
-    function initializeClock(id, endtime) {
-      var clock = document.getElementById(id);
-      /*var daysSpan = clock.querySelector('.days');*/
-      var hoursSpan = clock.querySelector('.hours');
-      var minutesSpan = clock.querySelector('.minutes');
-      var secondsSpan = clock.querySelector('.seconds');
-
-      function updateClock() {
-        var t = getTimeRemaining(endtime);
-
-        /*daysSpan.innerHTML = t.days;*/
-        hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
-        minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-        secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
-
-        if (t.total <= 0) {
-          clearInterval(timeinterval);
-        }
-      }
-
-      updateClock();
-      var timeinterval = setInterval(updateClock, 1000);
-    }
-
-    var deadline = '2018-1-1';
-    initializeClock('clockdiv', deadline);
-/*https://codepen.io/SitePoint/pen/MwNPVq
-https://www.sitepoint.com/build-javascript-countdown-timer-no-dependencies/*/
-  </script>
-
+</script>
 </body>
 </html>
